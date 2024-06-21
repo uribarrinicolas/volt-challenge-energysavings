@@ -22,7 +22,7 @@ class Program
 
         Console.WriteLine($"TS={report[600].Timestamp};ENEC={report[600].ExternalNetworkElectricityConsumption}kw;S=${report[600].Savings};");
 
-        SaveReportToJson(report, reportFilePath);
+        await WriteJsonFileAsync(reportFilePath, report);
         Console.WriteLine("Finishing");
 
     }
@@ -35,7 +35,7 @@ class Program
         }
     }
 
-    private static void SaveReportToJson(List<EnergyReportModel> report, string filePath)
+    public static async Task WriteJsonFileAsync<T>(string filePath, T data)
     {
         var options = new JsonSerializerOptions
         {
@@ -43,8 +43,7 @@ class Program
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
         };
 
-        var jsonString = JsonSerializer.Serialize(report, options);
-        File.WriteAllText(filePath, jsonString);
+        var jsonString = JsonSerializer.Serialize(data, options);
+        await File.WriteAllTextAsync(filePath, jsonString);
     }
-
 }
