@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+using EnergySavings.Models;
 
 namespace EnergySavings;
 class Program
@@ -116,30 +116,4 @@ class Program
         }
         return prev;
     }
-}
-
-public class HouseholdConsumptionModel
-{
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
-    [JsonPropertyName("electricity_consumption")]
-    public double ElectricityConsumption { get; set; }
-}
-
-public class SolarOutputModel
-{
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
-    [JsonPropertyName("solar_output")]
-    public double SolarOutput { get; set; }
-}
-
-public class EnergyReportModel
-{
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
-    [JsonPropertyName("external_network_electricity_consumption")]
-    public double ExternalNetworkElectricityConsumption { get; set; }
-    [JsonPropertyName("savings")]
-    public double Savings { get; set; }
 }
