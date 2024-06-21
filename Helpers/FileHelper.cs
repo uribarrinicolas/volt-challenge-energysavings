@@ -14,13 +14,7 @@ public static class FileHelper
 
     public static async Task WriteJsonFileAsync<T>(string filePath, T data)
     {
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-        };
-
-        var jsonString = JsonSerializer.Serialize(data, options);
+        var jsonString = JsonSerializer.Serialize(data);
         await File.WriteAllTextAsync(filePath, jsonString);
     }
 }
