@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EnergySavings": {
+      "commandName": "Project",
+      "commandLineArgs": "miami_household_consumption_with_timestamps.json miami_solar_output_with_timestamps.json energy_report.json"
+    }
+  }
+}

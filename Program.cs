@@ -8,9 +8,16 @@ class Program
     static async Task Main(string[] args)
     {
         Console.WriteLine("Volt Home - Advanced .NET Challenge");
-        var consumptionFilePath = "miami_household_consumption_with_timestamps.json";
-        var solarOutputFilePath = "miami_solar_output_with_timestamps.json";
-        var reportFilePath = "energy_report.json";
+
+        if (args.Length < 3)
+        {
+            Console.WriteLine("Usage: EnergySavings <input_household_consumption.json> <input_solar_output.json> <output_report.json>");
+            return;
+        }
+
+        var consumptionFilePath = args[0];
+        var solarOutputFilePath = args[1];
+        var reportFilePath = args[2];
 
         var householdConsumption = await FileHelper.ReadJsonFileAsync<List<HouseholdConsumptionModel>>(consumptionFilePath);
         var solarOutput = await FileHelper.ReadJsonFileAsync<List<SolarOutputModel>>(solarOutputFilePath);
