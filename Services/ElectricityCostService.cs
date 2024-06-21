@@ -12,7 +12,7 @@ public class ElectricityCostService
 
     private static double ObtainBaseCost(DateTime timestamp)
     {
-        bool isWeekend = timestamp.DayOfWeek == DayOfWeek.Saturday || timestamp.DayOfWeek == DayOfWeek.Sunday;
+        bool isWeekend = timestamp.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
         int hour = timestamp.Hour;
 
         if (isWeekend)
@@ -43,7 +43,7 @@ public class ElectricityCostService
 
     private static double ApplyWinterFee(double prev, DateTime timestamp)
     {
-        if (timestamp.Month == 12 || timestamp.Month == 1 || timestamp.Month == 2)
+        if (timestamp.Month is 12 or 1 or 2)
         {
             return prev * 1.15;
         }
