@@ -10,20 +10,25 @@ public class EnergyReportService
 
         for (int i = 0; i < consumption.Count; i++)
         {
-            var timestamp = consumption[i].Timestamp;
-            var electricityConsumption = consumption[i].ElectricityConsumption;
-            var solarEnergy = solarOutput[i].SolarOutput;
-            var externalNetworkElectricityConsumption = electricityConsumption - solarEnergy;
-            var savings = solarEnergy * ElectricityCostService.GetKwhCost(timestamp) / 60;
-
-            report.Add(new EnergyReportModel
-            {
-                Timestamp = timestamp,
-                ExternalNetworkElectricityConsumption = externalNetworkElectricityConsumption,
-                Savings = savings
-            });
+            report.Add(GenerateEnergyReportPerMinute(consumption[i], solarOutput[i]));
         }
 
         return report;
+    }
+
+    private static EnergyReportModel GenerateEnergyReportPerMinute(HouseholdConsumptionModel consumption, SolarOutputModel solarOutput)
+    {
+        var timestamp = consumption.Timestamp;
+        var electricityConsumption = consumption.ElectricityConsumption;
+        var solarEnergy = solarOutput.SolarOutput;
+        var externalNetworkElectricityConsumption = electricityConsumption - solarEnergy;
+        var savings = solarEnergy * ElectricityCostService.GetKwhCost(timestamp) / 60;
+
+        return new EnergyReportModel
+        {
+            Timestamp = timestamp,
+            ExternalNetworkElectricityConsumption = externalNetworkElectricityConsumption,
+            Savings = savings
+        };
     }
 }
