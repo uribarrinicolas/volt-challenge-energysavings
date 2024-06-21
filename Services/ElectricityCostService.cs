@@ -41,12 +41,9 @@ public class ElectricityCostService
         }
     }
 
-    private static double ApplyWinterFee(double prev, DateTime timestamp)
+    private static double ApplyWinterFee(double prev, DateTime timestamp) => timestamp.Month switch
     {
-        if (timestamp.Month is 12 or 1 or 2)
-        {
-            return prev * 1.15;
-        }
-        return prev;
-    }
+        12 or 1 or 2 => prev * 1.15,
+        _ => prev
+    };
 }
