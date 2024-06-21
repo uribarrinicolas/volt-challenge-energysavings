@@ -18,7 +18,7 @@ class Program
         Console.WriteLine($"TS={householdConsumption[600].Timestamp};EC={householdConsumption[600].ElectricityConsumption}kw;");
         Console.WriteLine($"TS={solarOutput[600].Timestamp};SO={solarOutput[600].SolarOutput}kw;");
 
-        var report = GenerateEnergyReport(householdConsumption, solarOutput);
+        var report = EnergyReportService.GenerateEnergyReport(householdConsumption, solarOutput);
 
         Console.WriteLine($"TS={report[600].Timestamp};ENEC={report[600].ExternalNetworkElectricityConsumption}kw;S=${report[600].Savings};");
 
@@ -47,26 +47,4 @@ class Program
         File.WriteAllText(filePath, jsonString);
     }
 
-    private static List<EnergyReportModel> GenerateEnergyReport(List<HouseholdConsumptionModel> consumption, List<SolarOutputModel> solarOutput)
-    {
-        var report = new List<EnergyReportModel>();
-
-        for (int i = 0; i < consumption.Count; i++)
-        {
-            var timestamp = consumption[i].Timestamp;
-            var electricityConsumption = consumption[i].ElectricityConsumption;
-            var solarEnergy = solarOutput[i].SolarOutput;
-            var externalNetworkElectricityConsumption = electricityConsumption - solarEnergy;
-            var savings = solarEnergy * ElectricityCostService.GetKwhCost(timestamp) / 60;
-
-            report.Add(new EnergyReportModel
-            {
-                Timestamp = timestamp,
-                ExternalNetworkElectricityConsumption = externalNetworkElectricityConsumption,
-                Savings = savings
-            });
-        }
-
-        return report;
-    }    
 }
